@@ -77,13 +77,14 @@ public class employeeController {
         String password = DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8));
         employee.setPassword(password);
         employee.setStatus(1);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
 
-        Long empID = (Long) request.getSession().getAttribute("employee");
-        employee.setCreateUser(empID);
-        employee.setUpdateUser(empID);
-        log.info("新增员工信息：{}", employee.toString());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        Long empID = (Long) request.getSession().getAttribute("employee");
+//        employee.setCreateUser(empID);
+//        employee.setUpdateUser(empID);
+
         employeeService.save(employee);
         return R.success("新增员工成功！");
     }
@@ -91,7 +92,7 @@ public class employeeController {
     @GetMapping("/page")
     public R<Page> page(int page, int pageSize, String name) {
 
-        log.info("page:{},pageSize:{},name:{}", page, pageSize, name);
+//        log.info("page:{},pageSize:{},name:{}", page, pageSize, name);
         //构造分页构造器
         Page pageInfo = new Page(page, pageSize);
         //构造条件构造器

@@ -1,9 +1,11 @@
 package com.kgh.reggie.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.kgh.reggie.commons.BaseContext;
 import com.kgh.reggie.commons.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,11 @@ public class LoginCheckFilter implements Filter {
 
         //判断登录状态，已登录则放行
         if (request.getSession().getAttribute("employee") != null) {
+            //获取用户id
+            Long empId = (Long) request.getSession().getAttribute("employee");
+            //将id传给线程
+            BaseContext.setid(empId);
+
             filterChain.doFilter(request, response);
             return;
         }
