@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequestMapping("/category")
 @RestController
@@ -51,9 +53,29 @@ public class categoryController {
     }
 
     @PutMapping
-    public R<String> update(@RequestBody  Category category) {
+    public R<String> update(@RequestBody Category category) {
         categoryService.updateById(category);
         return R.success("修改成功");
     }
 
+    /**
+     * 根据条件查询数据
+     *
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Category>> list(Category category) {
+        //条件构造器
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        //添加条件
+        wrapper.eq(category.getType() != null, Category::getType, category.getType());
+        //添加排序条件
+        wrapper.orderByAsc(Category::getSort).orderByAsc(Category::getUpdateTime);
+
+        //查询
+        List<Category> list = categoryService.list(wrapper);
+
+        return R.success(list);
+    }
 }
