@@ -120,4 +120,15 @@ public class DishesController {
         }
         return R.success("操作成功");
     }
+
+
+    @GetMapping("/list")
+    public R<List<Dish>> list(Dish dish) {
+        //条件构造器
+        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dish::getStatus, 1);//起售状态为1
+        wrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        List<Dish> list = dishService.list(wrapper);
+        return R.success(list);
+    }
 }
