@@ -128,13 +128,19 @@ public class setmealController {
      * 套餐回显
      */
     @GetMapping("/{id}")
-    public R<SetmealDto> get(@PathVariable long id){
+    public R<SetmealDto> get(@PathVariable long id) {
         return R.success(setmealService.getWithDIshById(id));
     }
 
     @PutMapping
-    public R<String> update(@RequestBody SetmealDto setmealDto){
+    public R<String> update(@RequestBody SetmealDto setmealDto) {
         setmealService.updateWithDish(setmealDto);
         return R.success("更新成功");
     }
+
+    @GetMapping("/list")
+    public R<List<Setmeal>> list() {
+        return null;
+    }
+
 }
